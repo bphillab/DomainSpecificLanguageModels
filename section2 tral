@@ -1,0 +1,56 @@
+#%%
+
+
+import pandas as pd
+import re
+import string
+import csv
+from sklearn.model_selection import StratifiedShuffleSplit
+from nltk.util import ngrams
+
+#%%
+
+tokenized_data = pd.read_csv('stackexchange_812k.tokenized.csv')
+tokenized_data
+
+#%%
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.1)
+for train_idx, test_idx in split.split(tokenized_data, tokenized_data['category']):
+    train_set = tokenized_data.loc[train_idx]
+    test_set = tokenized_data.loc[test_idx]
+
+#%%
+
+left_pad_symbol = '<s>'
+right_pad_symbol = '</s>'
+toks = train_set['tokens'].apply(lambda x:[i for i in ngrams(x.split(' '),
+                                                                2,
+                                                                pad_left=True,
+                                                                pad_right=True,
+                                                                left_pad_symbol=left_pad_symbol,
+                                                                right_pad_symbol=right_pad_symbol
+                                                                )])
+
+#%%
+
+all_toks = sum(toks,[])
+
+#%%
+
+from collections import Counter
+
+
+#%%
+
+freq = Counter()
+for i in range(len(all_toks)):
+    freq[i] = 
+
+#%%
+
+freq
+
+#%%
+
+
